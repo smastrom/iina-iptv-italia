@@ -1,0 +1,24 @@
+{
+  "name": "IPTV Italia",
+  "identifier": "local.iptv-italia",
+  "version": "1.0.0",
+  "ghRepo": "smastrom/iina-iptv-italia",
+  "ghVersion": 1,
+  "description": "TV italiana e playlist IPTV personalizzate, con guide XMLTV e abbinamento automatico dei canali.",
+  "author": {
+    "name": "smastrom"
+  },
+  "entry": "main.js",
+  "globalEntry": "global.js",
+  "sidebarTab": {
+    "name": "IPTV Italia · EPG"
+  },
+  "permissions": [
+    "network-request",
+    "file-system"
+  ],
+  "allowedDomains": [
+    "*"
+  ],
+  "preferenceDefaults": { "sources": "" }
+}

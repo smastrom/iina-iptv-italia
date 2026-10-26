@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPTV Italia · EPG</title>
+<style>
+  :root { color-scheme: light dark; font: 13px -apple-system, BlinkMacSystemFont, sans-serif; }
+  body { margin: 0; padding: 20px 17px 28px; color: CanvasText; background: transparent; overflow-wrap: anywhere; }
+  h1 { font-size: 22px; margin: 0 0 20px; } h2 { font-size: 19px; line-height: 1.3; margin: 7px 0 10px; }
+  h3 { font-size: 15px; margin: 6px 0 8px; } p { line-height: 1.55; margin: 8px 0; }
+  .label { font-size: 10px; font-weight: 700; letter-spacing: 1px; opacity: .65; }
+  #now .label { color: #26a566; opacity: 1; }
+  .muted, time { opacity: .65; font-size: 12px; } #description { white-space: pre-wrap; }
+  progress { width: 100%; height: 5px; accent-color: #26a566; margin-top: 12px; }
+  #remaining { text-align: right; font-size: 11px; opacity: .65; }
+  #next { border-top: 1px solid #8884; margin-top: 23px; padding-top: 20px; }
+  article + article { margin-top: 17px; }
+  .toolbar { display: flex; gap: 7px; margin-top: 25px; }
+  button { font: inherit; font-size: 11px; border: 1px solid #8886; border-radius: 7px; padding: 8px 10px; background: transparent; color: inherit; cursor: pointer; }
+  button:disabled { opacity: .4; cursor: wait; }
+  #status { margin-top: 13px; } #error { color: #d47653; font-size: 12px; white-space: pre-wrap; }
+  .views { display: flex; gap: 7px; margin-bottom: 22px; }
+  .views button[aria-pressed="true"] { border-color: #26a566; }
+  #channel-search { width: 100%; box-sizing: border-box; padding: 9px; border: 1px solid #8886; border-radius: 7px; background: transparent; color: inherit; font: inherit; }
+  #channel-list { margin: 8px -8px 0; }
+  #channel-list button { display: block; width: 100%; text-align: left; padding: 11px 8px; border: 0; border-bottom: 1px solid #8883; border-radius: 0; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+  #channel-list button:hover { background: #8882; }
+  #channel-list button[aria-current="true"] { color: #26a566; font-weight: 600; }
+  [hidden] { display: none !important; }
+</style>
+<nav class="views" aria-label="Vista EPG"><button id="in-onda" aria-pressed="true">In onda</button><button id="channels" aria-pressed="false">Canali + EPG</button></nav>
+<div id="programme-view">
+<h1 id="channel">IPTV Italia</h1>
+<section id="now">
+  <div class="label">IN ONDA</div><h2 id="title">Caricamento del programma…</h2>
+  <time id="time"></time>
+  <progress id="progress" max="1" value="0" hidden aria-label="Avanzamento del programma"></progress>
+  <div id="remaining"></div><p id="description"></p>
+</section>
+<section id="next" hidden><div class="label">A SEGUIRE</div><div id="upcoming"></div></section>
+</div>
+<section id="channels-view" hidden>
+  <h1>Canali + EPG</h1>
+  <input id="channel-search" type="search" placeholder="Cerca canale o programma…" aria-label="Cerca canale o programma">
+  <p id="channel-count" class="muted" role="status">Caricamento dei canali…</p>
+  <div id="channel-list" aria-label="Canali IPTV"></div>
+</section>
+<div class="toolbar"><button id="native-playlist">Playlist IINA</button><button id="refresh">Aggiorna EPG</button><button id="settings">Sorgenti…</button></div>
+<p id="status" class="muted" role="status"></p><p id="error" role="alert"></p>
+<script src="channel-list.js"></script>
+<script src="sidebar.js"></script>
+</html>

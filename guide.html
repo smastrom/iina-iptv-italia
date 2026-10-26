@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="it">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPTV Italia · Guida TV</title>
+<style>
+  :root { color-scheme: light dark; font: 14px -apple-system, BlinkMacSystemFont, sans-serif; }
+  body { margin: 0; background: Canvas; color: CanvasText; }
+  header { position: sticky; top: 0; padding: 22px 26px 16px; background: Canvas; border-bottom: 1px solid #8884; z-index: 1; }
+  h1 { margin: 0 0 5px; font-size: 24px; } p { margin: 6px 0; }
+  .muted, #status { opacity: .65; font-size: 12px; }
+  .toolbar { display: flex; gap: 10px; margin-top: 16px; }
+  input { flex: 1; min-width: 80px; } input, textarea, button { font: inherit; padding: 9px 12px; border: 1px solid #8886; border-radius: 8px; background: Canvas; color: CanvasText; }
+  button { cursor: pointer; } button:disabled { opacity: .5; cursor: wait; }
+  main { padding: 12px 26px 30px; } details { border-bottom: 1px solid #8884; padding: 15px 0; }
+  summary { cursor: pointer; } .channel { font-size: 16px; font-weight: 600; }
+  .now { margin-top: 9px; } .next { margin-top: 6px; opacity: .65; }
+  .badge { margin-left: 8px; color: #27a86a; font-size: 11px; font-weight: 600; }
+  .schedule { margin: 18px 0 5px 16px; } article { border-left: 2px solid #8885; padding: 0 0 18px 15px; }
+  article.live { border-color: #27a86a; } article p { line-height: 1.5; white-space: pre-wrap; }
+  #error { color: #cb593b; padding-top: 7px; font-size: 13px; }
+  time { font-variant-numeric: tabular-nums; } .empty { padding: 25px 0; opacity: .7; }
+  #sources { margin-bottom: 12px; } #sources summary { font-weight: 600; }
+  #source-form { max-width: 760px; padding: 8px 0; }
+  label { display: block; margin: 15px 0 6px; font-weight: 600; }
+  #source-form input, textarea { display: block; box-sizing: border-box; width: 100%; }
+  textarea { resize: vertical; min-height: 88px; }
+  .help { font-size: 12px; opacity: .7; line-height: 1.5; }
+  #settings-error { color: #cb593b; } #settings-status { color: #27a86a; }
+  .matching { margin-bottom: 20px; padding: 12px; background: #8881; border-radius: 8px; }
+  .matching label { margin-top: 0; } .matching input { width: 100%; box-sizing: border-box; }
+  .matching .toolbar { flex-wrap: wrap; margin-top: 8px; }
+  [hidden] { display: none !important; }
+</style>
+<header>
+  <h1>IPTV Italia <span class="muted">Guida TV</span></h1>
+  <p class="muted">In onda e prossimi programmi · Orari locali · Seleziona un canale per il palinsesto</p>
+  <div class="toolbar"><input id="search" type="search" aria-label="Cerca canale o programma" placeholder="Cerca canale o programma…"><button id="refresh">Aggiorna EPG</button><button id="show-sources">Sorgenti…</button></div>
+  <p id="status" role="status">Caricamento della guida TV…</p><div id="error" role="alert"></div>
+</header>
+<main>
+  <details id="sources">
+    <summary>Sorgenti IPTV / EPG</summary>
+    <form id="source-form">
+      <p class="help">Usa la playlist italiana inclusa oppure aggiungi le tue sorgenti. Le impostazioni vengono salvate su questo Mac.</p>
+      <label for="playlist-url">Playlist M3U / M3U8</label>
+      <input id="playlist-url" type="text" required spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="https://esempio.it/lista.m3u oppure /Users/…/lista.m3u">
+      <label for="epg-urls">Guide XMLTV / XMLTV.gz · una sorgente per riga</label>
+      <textarea id="epg-urls" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Lascia vuoto per usare l’EPG indicato nella playlist"></textarea>
+      <p class="help">Sono supportati URL HTTP(S), percorsi assoluti e file://. Se il campo EPG è vuoto, il plugin cerca x-tvg-url, url-tvg e tvg-url nell’intestazione M3U. Puoi usare fino a 16 guide: per ID ripetuti ha priorità la prima con un palinsesto disponibile.</p>
+      <div class="toolbar"><button id="save-sources" type="submit" data-load-control>Salva sorgenti</button><button id="default-sources" type="button">Usa fonti italiane</button><button id="open-playlist" type="button">Apri playlist salvata</button></div>
+      <p id="settings-status" role="status"></p><p id="settings-error" role="alert"></p>
+      <p class="help">Dopo aver cambiato playlist, usa «Apri playlist salvata» per riprodurre il nuovo elenco. Espandi un canale nella guida per correggere l’abbinamento EPG.</p>
+    </form>
+  </details>
+  <div id="channels"></div>
+  <datalist id="epg-options"></datalist>
+</main>
+<script src="guide.js"></script>
+</html>
